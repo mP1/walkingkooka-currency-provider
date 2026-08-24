@@ -1,0 +1,96 @@
+/*
+ * Copyright 2026 Miroslav Pokorny (github.com/mP1)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
+package walkingkooka.currency.provider;
+
+import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.currency.CurrencyExchangeRaterContext;
+import walkingkooka.plugin.MergedProviderMapper;
+import walkingkooka.plugin.ProviderContext;
+
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * A {@link CurrencyExchangeRaterProvider} that supports renaming {@link CurrencyExchangeRaterName} before invoking a wrapped {@link CurrencyExchangeRaterProvider}.
+ */
+final class MergedMappedCurrencyExchangeRaterProvider implements CurrencyExchangeRaterProvider {
+
+    static MergedMappedCurrencyExchangeRaterProvider with(final CurrencyExchangeRaterInfoSet infos,
+                                                          final CurrencyExchangeRaterProvider provider) {
+        Objects.requireNonNull(infos, "infos");
+        Objects.requireNonNull(provider, "provider");
+
+        return new MergedMappedCurrencyExchangeRaterProvider(
+            infos,
+            provider
+        );
+    }
+
+    private MergedMappedCurrencyExchangeRaterProvider(final CurrencyExchangeRaterInfoSet infos,
+                                                      final CurrencyExchangeRaterProvider provider) {
+        this.provider = provider;
+        this.mapper = MergedProviderMapper.with(
+            infos,
+            provider.currencyExchangeRaterInfos(),
+            CurrencyExchangeRaterPluginHelper.INSTANCE
+        );
+    }
+
+    @Override
+    public <C extends CurrencyExchangeRaterContext> CurrencyExchangeRater<C> currencyExchangeRater(final CurrencyExchangeRaterSelector selector,
+                                                                                                   final ProviderContext context) {
+        Objects.requireNonNull(selector, "selector");
+
+        return selector.evaluateValueText(
+            this,
+            context
+        );
+    }
+
+    @Override
+    public <C extends CurrencyExchangeRaterContext> CurrencyExchangeRater<C> currencyExchangeRater(final CurrencyExchangeRaterName name,
+                                                                                                   final List<?> values,
+                                                                                                   final ProviderContext context) {
+        Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(values, "values");
+        Objects.requireNonNull(context, "context");
+
+        return this.provider.currencyExchangeRater(
+            this.mapper.name(name),
+            values,
+            context
+        );
+    }
+
+    /**
+     * The original wrapped {@link CurrencyExchangeRaterProvider}.
+     */
+    private final CurrencyExchangeRaterProvider provider;
+
+    @Override
+    public CurrencyExchangeRaterInfoSet currencyExchangeRaterInfos() {
+        return this.mapper.infos();
+    }
+
+    private final MergedProviderMapper<CurrencyExchangeRaterName, CurrencyExchangeRaterInfo, CurrencyExchangeRaterInfoSet, CurrencyExchangeRaterSelector, CurrencyExchangeRaterAlias, CurrencyExchangeRaterAliasSet> mapper;
+
+    @Override
+    public String toString() {
+        return this.mapper.toString();
+    }
+}
