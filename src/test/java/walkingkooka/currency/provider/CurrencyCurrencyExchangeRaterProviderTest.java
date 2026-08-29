@@ -112,6 +112,20 @@ public final class CurrencyCurrencyExchangeRaterProviderTest implements Currency
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testPrintTree() {
+        this.treePrintAndCheck(
+            this.createCurrencyExchangeRaterProvider(),
+            "CurrencyCurrencyExchangeRaterProvider\n" +
+                "  CurrencyExchangeRaterInfoSet\n" +
+                "    https://github.com/mP1/walkingkooka-currency-provider/CurrencyExchangeRater/properties properties\n"
+        );
+    }
+
+    // class............................................................................................................
+
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
