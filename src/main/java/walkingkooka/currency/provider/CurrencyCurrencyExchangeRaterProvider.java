@@ -19,6 +19,7 @@ package walkingkooka.currency.provider;
 
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.set.ImmutableSortedSet;
 import walkingkooka.collect.set.Sets;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.currency.CurrencyExchangeRater;
@@ -27,6 +28,7 @@ import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
@@ -52,12 +54,10 @@ final class CurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRat
 
         this.numberParser = numberParser;
         this.infos = CurrencyExchangeRaterInfoSet.with(
-            Sets.readOnly(
                 CurrencyExchangeRaterName.NAME_TO_FACTORY.keySet()
                     .stream()
                     .map(CurrencyCurrencyExchangeRaterProvider::nameToCurrencyExchangeRaterInfo)
-                    .collect(Collectors.toCollection(SortedSets::tree))
-            )
+                    .collect(ImmutableSortedSet.collector(null))
         );
     }
 
