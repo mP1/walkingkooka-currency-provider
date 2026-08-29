@@ -25,6 +25,8 @@ import walkingkooka.currency.CurrencyExchangeRaterContext;
 import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,8 @@ import java.util.function.Function;
 /**
  * A {@link CurrencyExchangeRaterProvider} that sources all {@link CurrencyExchangeRater} from {@link CurrencyExchangeRaters}.
  */
-final class CurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRaterProvider {
+final class CurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRaterProvider,
+    TreePrintable {
 
     /**
      * Factory
@@ -113,5 +116,21 @@ final class CurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRat
     @Override
     public String toString() {
         return this.getClass().getSimpleName();
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.currencyExchangeRaterInfos(),
+                printer
+            );
+        }
+        printer.outdent();
     }
 }
