@@ -20,20 +20,15 @@ package walkingkooka.currency.provider;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.set.ImmutableSortedSet;
-import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
 import walkingkooka.currency.CurrencyExchangeRater;
 import walkingkooka.currency.CurrencyExchangeRaterContext;
 import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.net.UrlPath;
 import walkingkooka.plugin.ProviderContext;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * A {@link CurrencyExchangeRaterProvider} that sources all {@link CurrencyExchangeRater} from {@link CurrencyExchangeRaters}.
@@ -91,15 +86,16 @@ final class CurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRat
         Objects.requireNonNull(values, "values");
         Objects.requireNonNull(context, "context");
 
-        final BiFunction<List<?>, CurrencyCurrencyExchangeRaterProvider, CurrencyExchangeRater<?>> factory = CurrencyExchangeRaterName.NAME_TO_FACTORY.get(name);
+        final CurrencyExchangeRaterNameFactory factory = CurrencyExchangeRaterName.NAME_TO_FACTORY.get(name);
         if (null == factory) {
             throw new IllegalArgumentException("Unknown currencyExchangeRater " + name);
         }
 
         return Cast.to(
-            factory.apply(
+            factory.create(
                 Lists.immutable(values),
-                this
+                this,
+                context
             )
         );
     }

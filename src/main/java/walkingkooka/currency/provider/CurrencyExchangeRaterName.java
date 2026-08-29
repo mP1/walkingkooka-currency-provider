@@ -24,6 +24,7 @@ import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.naming.Name;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
+import walkingkooka.plugin.ProviderContext;
 import walkingkooka.props.Properties;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
@@ -34,9 +35,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 /**
  * The {@link Name} of a {@link CurrencyExchangeRater}. Note comparator names are case-sensitive.
@@ -60,29 +59,8 @@ final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyE
 
     // constants........................................................................................................
 
-    private static CurrencyExchangeRaterName registerConstantName(final String name) {
-        return registerConstantName(
-            name,
-            (BiFunction<List<?>, CurrencyCurrencyExchangeRaterProvider, CurrencyExchangeRater<?>>) null
-        );
-    }
-
     private static CurrencyExchangeRaterName registerConstantName(final String name,
-                                                                  final Supplier<CurrencyExchangeRater<?>> currencyExchangeRater) {
-        return registerConstantName(
-            name,
-            (List<?> p, CurrencyCurrencyExchangeRaterProvider provider) -> {
-                if (false == p.isEmpty()) {
-                    throw new IllegalArgumentException("Expected no parameters got " + p.size() + "=" + p);
-                }
-
-                return currencyExchangeRater.get();
-            }
-        );
-    }
-
-    private static CurrencyExchangeRaterName registerConstantName(final String name,
-                                                                  final BiFunction<List<?>, CurrencyCurrencyExchangeRaterProvider, CurrencyExchangeRater<?>> factory) {
+                                                                  final CurrencyExchangeRaterNameFactory factory) {
         final CurrencyExchangeRaterName currencyExchangeRaterName = new CurrencyExchangeRaterName(name);
         NAME_TO_FACTORY.put(
             currencyExchangeRaterName,
@@ -94,7 +72,7 @@ final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyE
     /**
      * Holds all constants in a {@link Set}.
      */
-    final static Map<CurrencyExchangeRaterName, BiFunction<List<?>, CurrencyCurrencyExchangeRaterProvider, CurrencyExchangeRater<?>>> NAME_TO_FACTORY = Maps.sorted();
+    final static Map<CurrencyExchangeRaterName, CurrencyExchangeRaterNameFactory> NAME_TO_FACTORY = Maps.sorted();
 
     private final static String PROPERTIES_STRING = "properties";
 
@@ -103,15 +81,23 @@ final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyE
      */
     public final static CurrencyExchangeRaterName PROPERTIES = registerConstantName(
         PROPERTIES_STRING,
-        (List<?> values, CurrencyCurrencyExchangeRaterProvider provider) -> {
-            if (values.size() != 1) {
-                throw new IllegalArgumentException("Expected exactly one parameter, got " + values.size());
-            }
+        new CurrencyExchangeRaterNameFactory() {
+            @Override
+            public CurrencyExchangeRater<?> create(final List<?> parameters,
+                                                   final CurrencyCurrencyExchangeRaterProvider provider,
+                                                   final ProviderContext context) {
+                if (parameters.size() != 1) {
+                    throw new IllegalArgumentException("Expected exactly one parameter, got " + parameters.size());
+                }
 
-            return CurrencyExchangeRaters.properties(
-                (Properties) values.get(0),
-                provider.numberParser
-            );
+                return CurrencyExchangeRaters.properties(
+                    context.convertOrFail(
+                        parameters.get(0),
+                        Properties.class
+                    ),
+                    provider.numberParser
+                );
+            }
         }
     );
 

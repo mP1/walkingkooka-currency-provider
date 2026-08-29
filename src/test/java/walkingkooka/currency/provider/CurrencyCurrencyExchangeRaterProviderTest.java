@@ -18,25 +18,92 @@
 package walkingkooka.currency.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Either;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.collect.set.Sets;
-import walkingkooka.collect.set.SortedSets;
-import walkingkooka.currency.CurrencyExchangeRater;
+import walkingkooka.convert.BinaryNumberConverterFunctions;
+import walkingkooka.convert.ConverterContext;
+import walkingkooka.convert.ConverterContexts;
+import walkingkooka.convert.Converters;
 import walkingkooka.currency.CurrencyExchangeRaters;
-import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
+import walkingkooka.currency.CurrencyLocaleContextTesting;
+import walkingkooka.datetime.DateTimeContextTesting;
+import walkingkooka.math.DecimalNumberContextTesting;
+import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.props.Properties;
 import walkingkooka.reflect.JavaVisibility;
-import walkingkooka.reflect.MethodAttributes;
-import walkingkooka.text.CaseKind;
+import walkingkooka.text.BinaryTextContextTesting;
+import walkingkooka.text.CharSequences;
 
-import java.lang.reflect.Method;
-import java.util.Set;
 import java.util.function.Function;
 
-public final class CurrencyCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<CurrencyCurrencyExchangeRaterProvider> {
+public final class CurrencyCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<CurrencyCurrencyExchangeRaterProvider>,
+    BinaryTextContextTesting,
+    CurrencyLocaleContextTesting,
+    DateTimeContextTesting,
+    DecimalNumberContextTesting {
 
     private final static Function<String, Number> NUMBER_PARSER = Double::parseDouble;
+
+    @Test
+    public void testCurrencyExchangeRaterWithProperties() {
+        final Properties properties = Properties.parse(
+            "AUD-NZD=1.1\n"
+        );
+
+        System.out.println(
+            properties
+        );
+
+        System.out.println(
+            "properties " + properties
+        );
+
+        System.out.println(
+            "properties " + CharSequences.quoteAndEscape(properties.toString())
+        );
+
+        this.currencyExchangeRaterAndCheck(
+            "properties (" + CharSequences.quoteAndEscape(properties.toString()) + ")",
+            new FakeProviderContext() {
+
+                @Override
+                public boolean canConvert(final Object value,
+                                          final Class<?> type) {
+                    throw new UnsupportedOperationException();
+                }
+
+                @Override
+                public <T> Either<T, String> convert(final Object value,
+                                                     final Class<T> type) {
+                    return this.converterContext.convert(
+                        value,
+                        type
+                    );
+                }
+
+                private final ConverterContext converterContext = ConverterContexts.basic(
+                    false, // canNumbersHaveGroupSeparator
+                    0, // dateTimeOffset
+                    ',', // valueSeparator
+                    Converters.collection(
+                        Lists.of(
+                            Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                            Converters.textToProperties()
+                        )
+                    ),
+                    BinaryNumberConverterFunctions.multiply(),
+                    BINARY_TEXT_CONTEXT,
+                    CURRENCY_LOCALE_CONTEXT,
+                    DATE_TIME_CONTEXT,
+                    DECIMAL_NUMBER_CONTEXT
+                );
+            },
+            CurrencyExchangeRaters.properties(
+                properties,
+                NUMBER_PARSER
+            )
+        );
+    }
 
     @Override
     public CurrencyCurrencyExchangeRaterProvider createCurrencyExchangeRaterProvider() {
