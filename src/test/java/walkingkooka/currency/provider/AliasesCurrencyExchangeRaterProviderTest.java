@@ -239,9 +239,4 @@ public final class AliasesCurrencyExchangeRaterProviderTest implements CurrencyE
     public Class<AliasesCurrencyExchangeRaterProvider> type() {
         return AliasesCurrencyExchangeRaterProvider.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

@@ -168,9 +168,4 @@ public final class FilteredMappedCurrencyExchangeRaterProviderTest implements Cu
     public Class<FilteredMappedCurrencyExchangeRaterProvider> type() {
         return FilteredMappedCurrencyExchangeRaterProvider.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

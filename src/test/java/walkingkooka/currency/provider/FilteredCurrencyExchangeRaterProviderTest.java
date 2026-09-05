@@ -69,9 +69,4 @@ public final class FilteredCurrencyExchangeRaterProviderTest implements Currency
     public Class<FilteredCurrencyExchangeRaterProvider> type() {
         return FilteredCurrencyExchangeRaterProvider.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }

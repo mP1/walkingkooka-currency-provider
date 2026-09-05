@@ -58,9 +58,4 @@ public final class EmptyCurrencyExchangeRaterProviderTest implements CurrencyExc
     public Class<EmptyCurrencyExchangeRaterProvider> type() {
         return EmptyCurrencyExchangeRaterProvider.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }
