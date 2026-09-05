@@ -127,11 +127,6 @@ public final class CurrencyCurrencyExchangeRaterProviderTest implements Currency
     // class............................................................................................................
 
     @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
-
-    @Override
     public Class<CurrencyCurrencyExchangeRaterProvider> type() {
         return CurrencyCurrencyExchangeRaterProvider.class;
     }

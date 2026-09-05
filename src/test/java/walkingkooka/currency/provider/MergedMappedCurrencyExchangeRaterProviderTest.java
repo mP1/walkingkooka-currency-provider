@@ -209,9 +209,4 @@ public final class MergedMappedCurrencyExchangeRaterProviderTest implements Curr
     public Class<MergedMappedCurrencyExchangeRaterProvider> type() {
         return MergedMappedCurrencyExchangeRaterProvider.class;
     }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
-    }
 }
