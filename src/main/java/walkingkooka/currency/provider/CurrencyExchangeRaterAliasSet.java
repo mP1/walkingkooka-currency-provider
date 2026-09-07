@@ -60,15 +60,6 @@ public final class CurrencyExchangeRaterAliasSet extends AbstractSet<CurrencyExc
      */
     public final static CharacterConstant SEPARATOR = PluginAliasSet.SEPARATOR;
 
-    /**
-     * Factory that creates {@link CurrencyExchangeRaterAliasSet} with the given aliases.
-     */
-    public static CurrencyExchangeRaterAliasSet with(final SortedSet<CurrencyExchangeRaterAlias> aliases) {
-        return aliases instanceof CurrencyExchangeRaterAliasSet ?
-            (CurrencyExchangeRaterAliasSet) aliases :
-            EMPTY.setElements(aliases);
-    }
-
     public static CurrencyExchangeRaterAliasSet parse(final String text) {
         return new CurrencyExchangeRaterAliasSet(
             PluginAliasSet.parse(
@@ -147,12 +138,21 @@ public final class CurrencyExchangeRaterAliasSet extends AbstractSet<CurrencyExc
 
     @Override
     public CurrencyExchangeRaterAliasSet setElements(final Collection<CurrencyExchangeRaterAlias> aliases) {
-        final CurrencyExchangeRaterAliasSet after = new CurrencyExchangeRaterAliasSet(
-            this.pluginAliasSet.setElements(aliases)
-        );
-        return this.pluginAliasSet.equals(aliases) ?
-            this :
-            after;
+        final CurrencyExchangeRaterAliasSet currencyExchangeRaterAliasSet;
+
+        // dont wrap if CurrencyExchangeRaterAliasSet
+        if (aliases instanceof CurrencyExchangeRaterAliasSet) {
+            currencyExchangeRaterAliasSet = (CurrencyExchangeRaterAliasSet) aliases;
+        } else {
+            final CurrencyExchangeRaterAliasSet after = new CurrencyExchangeRaterAliasSet(
+                this.pluginAliasSet.setElements(aliases)
+            );
+            currencyExchangeRaterAliasSet = this.pluginAliasSet.equals(aliases) ?
+                this :
+                after;
+        }
+
+        return currencyExchangeRaterAliasSet;
     }
 
     @Override
