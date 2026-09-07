@@ -220,7 +220,7 @@ public final class AliasesCurrencyExchangeRaterProviderTest implements CurrencyE
 
                 @Override
                 public CurrencyExchangeRaterInfoSet currencyExchangeRaterInfos() {
-                    return CurrencyExchangeRaterInfoSet.with(
+                    return CurrencyExchangeRaterInfoSet.EMPTY.setElements(
                         Sets.of(
                             INFO1,
                             INFO2,

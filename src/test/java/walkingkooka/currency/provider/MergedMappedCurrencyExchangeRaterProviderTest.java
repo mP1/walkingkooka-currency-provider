@@ -156,7 +156,7 @@ public final class MergedMappedCurrencyExchangeRaterProviderTest implements Curr
     @Override
     public MergedMappedCurrencyExchangeRaterProvider createCurrencyExchangeRaterProvider() {
         return MergedMappedCurrencyExchangeRaterProvider.with(
-            CurrencyExchangeRaterInfoSet.with(
+            CurrencyExchangeRaterInfoSet.EMPTY.setElements(
                 Sets.of(
                     CurrencyExchangeRaterInfo.with(
                         RENAMED_URL,
@@ -185,7 +185,7 @@ public final class MergedMappedCurrencyExchangeRaterProviderTest implements Curr
 
                 @Override
                 public CurrencyExchangeRaterInfoSet currencyExchangeRaterInfos() {
-                    return CurrencyExchangeRaterInfoSet.with(
+                    return CurrencyExchangeRaterInfoSet.EMPTY.setElements(
                         Sets.of(
                             CurrencyExchangeRaterInfo.with(
                                 RENAMED_URL,

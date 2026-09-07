@@ -103,7 +103,7 @@ final class CurrencyExchangeRaterPluginHelper implements PluginHelper<CurrencyEx
 
     @Override
     public CurrencyExchangeRaterInfoSet infoSet(final Set<CurrencyExchangeRaterInfo> infos) {
-        return CurrencyExchangeRaterInfoSet.with(infos);
+        return CurrencyExchangeRaterInfoSet.EMPTY.setElements(infos);
     }
 
     @Override

@@ -30,7 +30,6 @@ import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -52,15 +51,6 @@ public final class CurrencyExchangeRaterInfoSet extends AbstractSet<CurrencyExch
                 CurrencyExchangeRaterInfo::parse
             )
         );
-    }
-
-    public static CurrencyExchangeRaterInfoSet with(final Set<CurrencyExchangeRaterInfo> infos) {
-        Objects.requireNonNull(infos, "infos");
-
-        final PluginInfoSet<CurrencyExchangeRaterName, CurrencyExchangeRaterInfo> pluginInfoSet = PluginInfoSet.with(infos);
-        return pluginInfoSet.isEmpty() ?
-            EMPTY :
-            new CurrencyExchangeRaterInfoSet(pluginInfoSet);
     }
 
     private CurrencyExchangeRaterInfoSet(final PluginInfoSet<CurrencyExchangeRaterName, CurrencyExchangeRaterInfo> pluginInfoSet) {
@@ -159,12 +149,22 @@ public final class CurrencyExchangeRaterInfoSet extends AbstractSet<CurrencyExch
 
     @Override
     public CurrencyExchangeRaterInfoSet setElements(final Collection<CurrencyExchangeRaterInfo> infos) {
-        final CurrencyExchangeRaterInfoSet after = new CurrencyExchangeRaterInfoSet(
-            this.pluginInfoSet.setElements(infos)
-        );
-        return this.pluginInfoSet.equals(infos) ?
-            this :
-            after;
+        CurrencyExchangeRaterInfoSet after;
+
+        if (infos instanceof CurrencyExchangeRaterInfoSet) {
+            after = (CurrencyExchangeRaterInfoSet) infos;
+        } else {
+            after = new CurrencyExchangeRaterInfoSet(
+                this.pluginInfoSet.setElements(infos)
+            );
+            after = after.isEmpty() ?
+                EMPTY :
+                this.equals(after) ?
+                    this :
+                    after;
+        }
+
+        return after;
     }
 
     @Override
@@ -214,7 +214,7 @@ public final class CurrencyExchangeRaterInfoSet extends AbstractSet<CurrencyExch
     // @VisibleForTesting
     static CurrencyExchangeRaterInfoSet unmarshall(final JsonNode node,
                                                    final JsonNodeUnmarshallContext context) {
-        return with(
+        return EMPTY.setElements(
             context.unmarshallSet(
                 node,
                 CurrencyExchangeRaterInfo.class

@@ -241,7 +241,7 @@ public interface CurrencyExchangeRaterProviderTesting<T extends CurrencyExchange
                                                     final CurrencyExchangeRaterInfo... expected) {
         this.currencyExchangeRaterInfosAndCheck(
             provider,
-            CurrencyExchangeRaterInfoSet.with(
+            CurrencyExchangeRaterInfoSet.EMPTY.setElements(
                 Sets.of(
                     expected
                 )
