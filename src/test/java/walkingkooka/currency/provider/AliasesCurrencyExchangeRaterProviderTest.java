@@ -27,7 +27,6 @@ import walkingkooka.currency.FakeCurrencyExchangeRater;
 import walkingkooka.currency.FakeCurrencyExchangeRaterContext;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 
 import java.util.List;
 
