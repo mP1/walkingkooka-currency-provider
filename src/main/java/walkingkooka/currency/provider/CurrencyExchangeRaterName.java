@@ -74,6 +74,27 @@ final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyE
      */
     final static Map<CurrencyExchangeRaterName, CurrencyExchangeRaterNameFactory> NAME_TO_FACTORY = Maps.sorted();
 
+    private final static String EMPTY_STRING = "empty";
+
+    /**
+     * The name of the {@link CurrencyExchangeRater} returned by {@link CurrencyExchangeRaters#empty()}.
+     */
+    public final static CurrencyExchangeRaterName EMPTY = registerConstantName(
+        EMPTY_STRING,
+        new CurrencyExchangeRaterNameFactory() {
+            @Override
+            public CurrencyExchangeRater<?> create(final List<?> parameters,
+                                                   final CurrencyCurrencyExchangeRaterProvider provider,
+                                                   final ProviderContext context) {
+                if (parameters.size() != 0) {
+                    throw new IllegalArgumentException("Expected exactly 0 parameter, got " + parameters.size());
+                }
+
+                return CurrencyExchangeRaters.empty();
+            }
+        }
+    );
+    
     private final static String PROPERTIES_STRING = "properties";
 
     /**

@@ -45,6 +45,16 @@ public final class CurrencyCurrencyExchangeRaterProviderTest implements Currency
     private final static Function<String, Number> NUMBER_PARSER = Double::parseDouble;
 
     @Test
+    public void testCurrencyExchangeRaterWithEMpty() {
+        this.currencyExchangeRaterAndCheck(
+            "empty",
+            new FakeProviderContext() {
+            },
+            CurrencyExchangeRaters.empty()
+        );
+    }
+
+    @Test
     public void testCurrencyExchangeRaterWithProperties() {
         final Properties properties = Properties.parse(
             "AUD-NZD=1.1\n"
@@ -120,6 +130,7 @@ public final class CurrencyCurrencyExchangeRaterProviderTest implements Currency
             this.createCurrencyExchangeRaterProvider(),
             "CurrencyCurrencyExchangeRaterProvider\n" +
                 "  CurrencyExchangeRaterInfoSet\n" +
+                "    https://github.com/mP1/walkingkooka-currency-provider/CurrencyExchangeRater/empty empty\n" +
                 "    https://github.com/mP1/walkingkooka-currency-provider/CurrencyExchangeRater/properties properties\n"
         );
     }
