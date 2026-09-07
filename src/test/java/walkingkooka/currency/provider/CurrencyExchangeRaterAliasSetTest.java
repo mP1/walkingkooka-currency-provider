@@ -27,7 +27,6 @@ import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class CurrencyExchangeRaterAliasSetTest implements PluginAliasSetLikeTesting<CurrencyExchangeRaterName,
     CurrencyExchangeRaterInfo,
@@ -38,33 +37,6 @@ public final class CurrencyExchangeRaterAliasSetTest implements PluginAliasSetLi
     HashCodeEqualsDefinedTesting2<CurrencyExchangeRaterAliasSet>,
     ToStringTesting<CurrencyExchangeRaterAliasSet>,
     JsonNodeMarshallerTesting<CurrencyExchangeRaterAliasSet> {
-
-    // with.............................................................................................................
-
-    @Test
-    public void testWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> CurrencyExchangeRaterAliasSet.with(null)
-        );
-    }
-
-    @Test
-    public void testWithEmpty() {
-        assertSame(
-            CurrencyExchangeRaterAliasSet.EMPTY,
-            CurrencyExchangeRaterAliasSet.with(SortedSets.empty())
-        );
-    }
-
-    @Test
-    public void testWithCurrencyExchangeRaterAliasSetDoesntWrap() {
-        final CurrencyExchangeRaterAliasSet currencyExchangeRaterAliasSet = this.createSet();
-        assertSame(
-            currencyExchangeRaterAliasSet,
-            CurrencyExchangeRaterAliasSet.with(currencyExchangeRaterAliasSet)
-        );
-    }
 
     // name.............................................................................................................
 
@@ -102,6 +74,14 @@ public final class CurrencyExchangeRaterAliasSetTest implements PluginAliasSetLi
             this.createSet(),
             CurrencyExchangeRaterName.with("custom-alias"),
             CurrencyExchangeRaterSelector.parse("custom(1)")
+        );
+    }
+
+    @Test
+    public void testSetElementsWithEmpty() {
+        assertSame(
+            CurrencyExchangeRaterAliasSet.EMPTY,
+            CurrencyExchangeRaterAliasSet.EMPTY.setElements(SortedSets.empty())
         );
     }
 

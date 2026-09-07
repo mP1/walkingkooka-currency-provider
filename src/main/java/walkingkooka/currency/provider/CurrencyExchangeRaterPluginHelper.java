@@ -129,7 +129,7 @@ final class CurrencyExchangeRaterPluginHelper implements PluginHelper<CurrencyEx
 
     @Override
     public CurrencyExchangeRaterAliasSet aliasSet(final SortedSet<CurrencyExchangeRaterAlias> aliases) {
-        return CurrencyExchangeRaterAliasSet.with(aliases);
+        return CurrencyExchangeRaterAliasSet.EMPTY.setElements(aliases);
     }
 
     @Override
