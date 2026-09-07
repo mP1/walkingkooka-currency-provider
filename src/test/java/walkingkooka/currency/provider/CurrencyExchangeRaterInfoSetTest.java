@@ -57,7 +57,7 @@ public final class CurrencyExchangeRaterInfoSetTest implements PluginInfoSetLike
 
     @Override
     public CurrencyExchangeRaterInfoSet createSet() {
-        return CurrencyExchangeRaterInfoSet.with(
+        return CurrencyExchangeRaterInfoSet.EMPTY.setElements(
             Sets.of(
                 this.info()
             )
@@ -70,18 +70,6 @@ public final class CurrencyExchangeRaterInfoSetTest implements PluginInfoSetLike
             Url.parseAbsolute("https://example.com/currencyExchangeRater-123"),
             CurrencyExchangeRaterName.with("currency-exchange-rater-123")
         );
-    }
-
-    // ImmutableSetTesting..............................................................................................
-
-    @Override
-    public void testSetElementsNullFails() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testSetElementsSame() {
-        throw new UnsupportedOperationException();
     }
 
     // json.............................................................................................................
@@ -97,7 +85,7 @@ public final class CurrencyExchangeRaterInfoSetTest implements PluginInfoSetLike
     @Test
     public void testMarshallNotEmpty2() {
         this.marshallAndCheck(
-            CurrencyExchangeRaterInfoSet.with(
+            CurrencyExchangeRaterInfoSet.EMPTY.setElements(
                 Sets.of(
                     CurrencyExchangeRaterInfo.with(
                         Url.parseAbsolute("https://example.com/test-123"),
@@ -124,7 +112,7 @@ public final class CurrencyExchangeRaterInfoSetTest implements PluginInfoSetLike
 
     @Override
     public CurrencyExchangeRaterInfoSet createJsonNodeMarshallingValue() {
-        return CurrencyExchangeRaterInfoSet.with(
+        return CurrencyExchangeRaterInfoSet.EMPTY.setElements(
             Sets.of(
                 CurrencyExchangeRaterInfo.with(
                     Url.parseAbsolute("https://example.com/test-111"),

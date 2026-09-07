@@ -51,7 +51,7 @@ final class CurrencyCurrencyExchangeRaterProvider implements CurrencyExchangeRat
         super();
 
         this.numberParser = numberParser;
-        this.infos = CurrencyExchangeRaterInfoSet.with(
+        this.infos = CurrencyExchangeRaterInfoSet.EMPTY.setElements(
                 CurrencyExchangeRaterName.NAME_TO_FACTORY.keySet()
                     .stream()
                     .map(CurrencyCurrencyExchangeRaterProvider::nameToCurrencyExchangeRaterInfo)
