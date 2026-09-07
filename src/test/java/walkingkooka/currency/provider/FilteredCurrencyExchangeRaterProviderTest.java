@@ -19,13 +19,7 @@ package walkingkooka.currency.provider;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.ToStringTesting;
-import walkingkooka.collect.list.Lists;
-import walkingkooka.currency.CurrencyExchangeRaters;
-import walkingkooka.plugin.ProviderContext;
-import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 
-import java.util.List;
 import java.util.function.Function;
 
 public final class FilteredCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<FilteredCurrencyExchangeRaterProvider>,
