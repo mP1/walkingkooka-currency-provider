@@ -30,7 +30,6 @@ import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.math.DecimalNumberContextTesting;
 import walkingkooka.plugin.FakeProviderContext;
 import walkingkooka.props.Properties;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.BinaryTextContextTesting;
 import walkingkooka.text.CharSequences;
 
@@ -58,18 +57,6 @@ public final class CurrencyCurrencyExchangeRaterProviderTest implements Currency
     public void testCurrencyExchangeRaterWithProperties() {
         final Properties properties = Properties.parse(
             "AUD-NZD=1.1\n"
-        );
-
-        System.out.println(
-            properties
-        );
-
-        System.out.println(
-            "properties " + properties
-        );
-
-        System.out.println(
-            "properties " + CharSequences.quoteAndEscape(properties.toString())
         );
 
         this.currencyExchangeRaterAndCheck(
