@@ -22,6 +22,7 @@ import walkingkooka.collect.map.Maps;
 import walkingkooka.currency.CurrencyExchangeRater;
 import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.naming.Name;
+import walkingkooka.net.http.server.hateos.HateosResourceName;
 import walkingkooka.plugin.PluginName;
 import walkingkooka.plugin.PluginNameLike;
 import walkingkooka.plugin.ProviderContext;
@@ -41,6 +42,10 @@ import java.util.function.Function;
  * The {@link Name} of a {@link CurrencyExchangeRater}. Note comparator names are case-sensitive.
  */
 final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyExchangeRaterName> {
+
+    public static final String HATEOS_RESOURCE_NAME_STRING = "currencyExchangeRater";
+
+    public static final HateosResourceName HATEOS_RESOURCE_NAME = HateosResourceName.with(HATEOS_RESOURCE_NAME_STRING);
 
     public static boolean isChar(final int pos,
                                  final char c) {
