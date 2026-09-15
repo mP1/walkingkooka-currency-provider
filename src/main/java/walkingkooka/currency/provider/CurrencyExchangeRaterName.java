@@ -136,6 +136,9 @@ final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyE
         final CurrencyExchangeRaterName currencyExchangeRaterName;
 
         switch (name) {
+            case EMPTY_STRING:
+                currencyExchangeRaterName = EMPTY;
+                break;
             case PROPERTIES_STRING:
                 currencyExchangeRaterName = PROPERTIES;
                 break;
