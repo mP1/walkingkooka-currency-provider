@@ -25,6 +25,22 @@ import java.util.Optional;
 public final class HasOptionalCurrencyExchangeRaterSelectorTestingTest implements HasOptionalCurrencyExchangeRaterSelectorTesting {
 
     @Test
+    public void testConstants() {
+        this.checkNotEquals(
+            CURRENCY_EXCHANGE_RATER_SELECTOR,
+            DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR
+        );
+    }
+
+    @Test
+    public void testOptionalConstants() {
+        this.checkNotEquals(
+            OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR,
+            OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR
+        );
+    }
+
+    @Test
     public void testCurrencyExchangeRaterSelectorAndCheckWithNone() {
         this.currencyExchangeRaterSelectorAndCheck(
             () -> HasOptionalCurrencyExchangeRaterSelector.NO_CURRENCY_EXCHANGE_RATER_SELECTOR
