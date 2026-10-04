@@ -23,6 +23,14 @@ import java.util.Optional;
 
 public interface HasOptionalCurrencyExchangeRaterSelectorTesting extends TreePrintableTesting {
 
+    CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR = CurrencyExchangeRaterSelector.parse("test-currency-exchange-rater-111");
+
+    CurrencyExchangeRaterSelector DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR = CurrencyExchangeRaterSelector.parse("test-different-currency-exchange-rater-222");
+
+    Optional<CurrencyExchangeRaterSelector> OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR = Optional.of(CURRENCY_EXCHANGE_RATER_SELECTOR);
+
+    Optional<CurrencyExchangeRaterSelector> OPTIONAL_DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR = Optional.of(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR);
+
     default void currencyExchangeRaterSelectorAndCheck(final HasOptionalCurrencyExchangeRaterSelector has) {
         this.currencyExchangeRaterSelectorAndCheck(
             has,
