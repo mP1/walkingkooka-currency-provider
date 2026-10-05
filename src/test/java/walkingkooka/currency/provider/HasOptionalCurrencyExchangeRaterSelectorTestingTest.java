@@ -20,8 +20,6 @@ package walkingkooka.currency.provider;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-import java.util.Optional;
-
 public final class HasOptionalCurrencyExchangeRaterSelectorTestingTest implements HasOptionalCurrencyExchangeRaterSelectorTesting {
 
     @Test
@@ -49,11 +47,9 @@ public final class HasOptionalCurrencyExchangeRaterSelectorTestingTest implement
 
     @Test
     public void testCurrencyExchangeRaterSelectorAndCheck() {
-        final CurrencyExchangeRaterSelector selector = CurrencyExchangeRaterSelector.parse("hello");
-
         this.currencyExchangeRaterSelectorAndCheck(
-            () -> Optional.of(selector),
-            selector
+            () -> OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR,
+            CURRENCY_EXCHANGE_RATER_SELECTOR
         );
     }
 
@@ -63,10 +59,8 @@ public final class HasOptionalCurrencyExchangeRaterSelectorTestingTest implement
         try {
             this.currencyExchangeRaterSelectorAndCheck(
                 () ->
-                    Optional.of(
-                        CurrencyExchangeRaterSelector.parse("hello")
-                    ),
-                CurrencyExchangeRaterSelector.parse("different")
+                    OPTIONAL_CURRENCY_EXCHANGE_RATER_SELECTOR,
+                DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR
             );
         } catch (final AssertionFailedError expected) {
             failed = true;
