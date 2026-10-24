@@ -18,7 +18,6 @@
 package walkingkooka.currency.provider;
 
 import walkingkooka.plugin.PluginHelperTesting;
-import walkingkooka.reflect.JavaVisibility;
 
 public final class CurrencyExchangeRaterPluginHelperTest implements PluginHelperTesting<CurrencyExchangeRaterPluginHelper,
     CurrencyExchangeRaterName,
@@ -43,10 +42,5 @@ public final class CurrencyExchangeRaterPluginHelperTest implements PluginHelper
     @Override
     public Class<CurrencyExchangeRaterPluginHelper> type() {
         return CurrencyExchangeRaterPluginHelper.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
