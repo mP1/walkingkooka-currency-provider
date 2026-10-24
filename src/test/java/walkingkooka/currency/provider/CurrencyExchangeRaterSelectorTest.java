@@ -28,7 +28,6 @@ import walkingkooka.plugin.PluginSelectorEvaluateValueTextProvider;
 import walkingkooka.plugin.PluginSelectorLikeTesting;
 import walkingkooka.plugin.ProviderContext;
 import walkingkooka.plugin.ProviderContexts;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -497,18 +496,6 @@ public final class CurrencyExchangeRaterSelectorTest implements PluginSelectorLi
         );
     }
 
-    // ClassTesting.....................................................................................................
-
-    @Override
-    public Class<CurrencyExchangeRaterSelector> type() {
-        return CurrencyExchangeRaterSelector.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PUBLIC;
-    }
-
     // Json.............................................................................................................
 
     @Test
@@ -544,7 +531,12 @@ public final class CurrencyExchangeRaterSelectorTest implements PluginSelectorLi
         );
     }
 
-    // type name testing................................................................................................
+    // class............................................................................................................
+
+    @Override
+    public Class<CurrencyExchangeRaterSelector> type() {
+        return CurrencyExchangeRaterSelector.class;
+    }
 
     @Override
     public String typeNamePrefix() {
