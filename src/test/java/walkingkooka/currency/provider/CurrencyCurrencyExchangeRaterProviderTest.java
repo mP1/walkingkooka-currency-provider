@@ -84,7 +84,7 @@ public final class CurrencyCurrencyExchangeRaterProviderTest implements Currency
                     ',', // valueSeparator
                     Converters.collection(
                         Lists.of(
-                            Converters.characterOrCharSequenceOrHasTextOrStringToCharacterOrCharSequenceOrString(),
+                            Converters.toText(),
                             Converters.textToProperties()
                         )
                     ),
