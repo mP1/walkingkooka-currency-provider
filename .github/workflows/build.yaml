@@ -1,0 +1,41 @@
+name: build
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Maven 3.6.3
+        uses: s4u/setup-maven-action@v1.18.0
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          maven-version: '3.6.3'
+
+      - name: Maven dependency/resolve
+        run: mvn dependency:resolve
+
+      - name: Maven install
+        run: mvn install -Dmaven.javadoc.skip=true -B -V -e > mvn-install.txt
+
+      - name: Print logs
+        if: ${{ always() }}
+        run: |
+          tail -n 500 mvn-install.txt
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: mvn-install.txt
+          path: mvn-install.txt
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: gwt-jar-test-build.log
+          path: target/it-tests/gwt-jar-test/build.log
