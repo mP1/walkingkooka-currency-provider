@@ -23,7 +23,7 @@ import walkingkooka.ToStringTesting;
 import java.util.function.Function;
 
 public final class FilteredCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<FilteredCurrencyExchangeRaterProvider>,
-    ToStringTesting<FilteredCurrencyExchangeRaterProvider> {
+    ToStringTesting {
 
     private final static Function<String, Number> NUMBER_PARSER = Double::parseDouble;
 
