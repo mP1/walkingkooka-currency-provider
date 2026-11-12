@@ -36,7 +36,7 @@ import java.util.Objects;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MergedMappedCurrencyExchangeRaterProviderTest implements CurrencyExchangeRaterProviderTesting<MergedMappedCurrencyExchangeRaterProvider>,
-    ToStringTesting<MergedMappedCurrencyExchangeRaterProvider> {
+    ToStringTesting {
 
     private final static AbsoluteUrl RENAMED_URL = Url.parseAbsolute("https://example.com/renamed-currency-exchange-rater-111");
 

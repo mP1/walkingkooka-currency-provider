@@ -35,7 +35,7 @@ public final class CurrencyExchangeRaterAliasSetTest implements PluginAliasSetLi
     CurrencyExchangeRaterAlias,
     CurrencyExchangeRaterAliasSet>,
     HashCodeEqualsDefinedTesting2<CurrencyExchangeRaterAliasSet>,
-    ToStringTesting<CurrencyExchangeRaterAliasSet>,
+    ToStringTesting,
     JsonNodeMarshallerTesting<CurrencyExchangeRaterAliasSet> {
 
     // name.............................................................................................................
