@@ -32,7 +32,9 @@ public final class CurrencyProviderStartup implements PublicStaticHelper {
         // register json marshallers/unmarshallers.
         CurrencyExchangeRaterAliasSet.EMPTY.size();
         CurrencyExchangeRaterInfoSet.EMPTY.size();
-        CurrencyExchangeRaterSelector.parse("hello");
+        CurrencyExchangeRaterSelectorList.EMPTY.concat(
+            CurrencyExchangeRaterSelector.parse("hello")
+        );
     }
 
     public static void init() {
