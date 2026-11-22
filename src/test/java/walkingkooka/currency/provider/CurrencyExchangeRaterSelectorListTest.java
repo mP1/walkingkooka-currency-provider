@@ -24,6 +24,9 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringList;
+import walkingkooka.tree.json.JsonNode;
+import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
+import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
 import java.util.Arrays;
 
@@ -31,7 +34,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class CurrencyExchangeRaterSelectorListTest implements ImmutableListTesting<CurrencyExchangeRaterSelectorList, CurrencyExchangeRaterSelector>,
     HasCsvStringListTsvStringListTesting2<CurrencyExchangeRaterSelectorList>,
-    HasOptionalCurrencyExchangeRaterSelectorTesting {
+    HasOptionalCurrencyExchangeRaterSelectorTesting,
+    JsonNodeMarshallerTesting<CurrencyExchangeRaterSelectorList> {
 
     // fromStringLikeList................................................................................................
 
@@ -190,6 +194,31 @@ public final class CurrencyExchangeRaterSelectorListTest implements ImmutableLis
         return this.createList();
     }
 
+    // json.............................................................................................................
+
+    @Test
+    public void testMarshall() {
+        this.marshallAndCheck(
+            CurrencyExchangeRaterSelectorList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR)
+                .concat(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR),
+            "\"test-currency-exchange-rater-111,test-different-currency-exchange-rater-222\""
+        );
+    }
+
+    @Override
+    public CurrencyExchangeRaterSelectorList unmarshall(final JsonNode jsonNode,
+                                                        final JsonNodeUnmarshallContext context) {
+        return CurrencyExchangeRaterSelectorList.unmarshall(
+            jsonNode,
+            context
+        );
+    }
+
+    @Override
+    public CurrencyExchangeRaterSelectorList createJsonNodeMarshallingValue() {
+        return this.createList();
+    }
+    
     // class............................................................................................................
 
     @Override
