@@ -18,12 +18,14 @@
 package walkingkooka.currency.provider;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.set.SortedSets;
 import walkingkooka.currency.CurrencyExchangeRaters;
 import walkingkooka.plugin.PluginNameTesting;
 import walkingkooka.reflect.FieldAttributes;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.MethodAttributes;
+import walkingkooka.reflect.ThrowableTesting;
 import walkingkooka.text.CaseKind;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
@@ -32,7 +34,10 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-final public class CurrencyExchangeRaterNameTest implements PluginNameTesting<CurrencyExchangeRaterName> {
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+final public class CurrencyExchangeRaterNameTest implements PluginNameTesting<CurrencyExchangeRaterName>,
+    ThrowableTesting {
 
     @Test
     public void testConstantNamesMatchCurrencyExchangeRatersFactoryMethods() {
@@ -63,6 +68,17 @@ final public class CurrencyExchangeRaterNameTest implements PluginNameTesting<Cu
                 .collect(Collectors.joining("\n")),
             factoryNames.stream()
                 .collect(Collectors.joining("\n"))
+        );
+    }
+
+    @Test
+    public void testWithInvalidCharacterFails() {
+        this.getMessageAndCheck(
+            assertThrows(
+                InvalidCharacterException.class,
+                () -> CurrencyExchangeRaterName.with("hello!")
+            ),
+            "Invalid \"CurrencyExchangeRaterName\" character '!' at 5"
         );
     }
 
