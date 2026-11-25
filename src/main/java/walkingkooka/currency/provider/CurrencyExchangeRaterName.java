@@ -155,7 +155,10 @@ final public class CurrencyExchangeRaterName implements PluginNameLike<CurrencyE
      */
     private CurrencyExchangeRaterName(final String name) {
         super();
-        this.name = PluginName.with(name);
+        this.name = PluginName.with(
+            CurrencyExchangeRaterName.class.getSimpleName(),
+            name
+        );
     }
 
     @Override
