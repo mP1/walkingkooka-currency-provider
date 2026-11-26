@@ -70,35 +70,44 @@ public final class CurrencyExchangeRaterSelectorList extends AbstractList<Curren
 
     @Override
     public CurrencyExchangeRaterSelectorList setElements(final Collection<CurrencyExchangeRaterSelector> collection) {
-        final CurrencyExchangeRaterSelectorList currencyList;
+        final CurrencyExchangeRaterSelectorList currencyExchangeRaterSelectorList;
 
         if (collection instanceof CurrencyExchangeRaterSelectorList) {
-            currencyList = (CurrencyExchangeRaterSelectorList) collection;
+            currencyExchangeRaterSelectorList = (CurrencyExchangeRaterSelectorList) collection;
         } else {
-            Objects.requireNonNull(collection, "collection");
-
             final List<CurrencyExchangeRaterSelector> copy = Lists.array();
-            for (final CurrencyExchangeRaterSelector currencyExchangeRaterSelector : collection) {
-                this.elementCheck(currencyExchangeRaterSelector);
+            copy.addAll(collection);
 
-                copy.add(currencyExchangeRaterSelector);
-            }
-
-            if (copy.equals(this)) {
-                currencyList = this;
-            } else {
-                currencyList = copy.isEmpty() ?
-                    EMPTY :
-                    new CurrencyExchangeRaterSelectorList(copy);
-            }
+            currencyExchangeRaterSelectorList = this.equals(copy) ?
+                this :
+                this.replaceCurrencyExchangeRaterSelectorList(copy);
         }
 
-        return currencyList;
+        return currencyExchangeRaterSelectorList;
+    }
+
+    @Override
+    public CurrencyExchangeRaterSelectorList subList(final int from,
+                                                     final int to) {
+        return 0 == from && this.size() == to ?
+            this :
+            this.replaceCurrencyExchangeRaterSelectorList(
+                this.list.subList(
+                    from,
+                    to
+                )
+            );
+    }
+
+    private CurrencyExchangeRaterSelectorList replaceCurrencyExchangeRaterSelectorList(final List<CurrencyExchangeRaterSelector> currencyExchangeRaterSelectorList) {
+        return currencyExchangeRaterSelectorList.isEmpty() ?
+            EMPTY :
+            new CurrencyExchangeRaterSelectorList(currencyExchangeRaterSelectorList);
     }
 
     @Override
     public void elementCheck(final CurrencyExchangeRaterSelector currencyExchangeRaterSelector) {
-        Objects.requireNonNull(currencyExchangeRaterSelector, "currencyExchangeRaterSelector");
+        // allowed
     }
 
     private final List<CurrencyExchangeRaterSelector> list;

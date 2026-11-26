@@ -28,7 +28,7 @@ import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
 import walkingkooka.tree.json.marshall.JsonNodeUnmarshallContext;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -98,27 +98,7 @@ public final class CurrencyExchangeRaterSelectorListTest implements ImmutableLis
         );
     }
 
-    // concat...........................................................................................................
-
-    @Test
-    public void testConcatWithNullFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> CurrencyExchangeRaterSelectorList.EMPTY.concat(null)
-        );
-    }
-
     // setElements......................................................................................................
-
-    @Test
-    public void testSetElementsWithNullElementFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> CurrencyExchangeRaterSelectorList.EMPTY.setElements(
-                Arrays.asList((CurrencyExchangeRaterSelector) null)
-            )
-        );
-    }
 
     @Test
     public void testSetElementsWithDifferent() {
@@ -141,6 +121,87 @@ public final class CurrencyExchangeRaterSelectorListTest implements ImmutableLis
             ),
             Lists.empty(),
             CurrencyExchangeRaterSelectorList.EMPTY
+        );
+    }
+
+    @Test
+    public void testSetElementsIncludesNullElement() {
+        final List<CurrencyExchangeRaterSelector> list = Lists.of(
+            CURRENCY_EXCHANGE_RATER_SELECTOR1,
+            null
+        );
+
+
+        this.setElementsAndCheck(
+            CurrencyExchangeRaterSelectorList.EMPTY,
+            list,
+            new CurrencyExchangeRaterSelectorList(list)
+
+        );
+    }
+
+    // subList..........................................................................................................
+
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR1 = CURRENCY_EXCHANGE_RATER_SELECTOR;
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR2 = DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR;
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR3 = CurrencyExchangeRaterSelector.parse("selector-3");
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR4 = CurrencyExchangeRaterSelector.parse("selector-4");
+    private final static CurrencyExchangeRaterSelector CURRENCY_EXCHANGE_RATER_SELECTOR5 = CurrencyExchangeRaterSelector.parse("selector-5");
+
+    private final static List<CurrencyExchangeRaterSelector> ELEMENTS = Lists.of(
+        CURRENCY_EXCHANGE_RATER_SELECTOR1,
+        CURRENCY_EXCHANGE_RATER_SELECTOR2,
+        CURRENCY_EXCHANGE_RATER_SELECTOR3,
+        CURRENCY_EXCHANGE_RATER_SELECTOR4,
+        CURRENCY_EXCHANGE_RATER_SELECTOR5
+    );
+
+    @Test
+    public void testSubList() {
+        this.subListAndCheck(
+            new CurrencyExchangeRaterSelectorList(ELEMENTS),
+            0,
+            2,
+            new CurrencyExchangeRaterSelectorList(
+                Lists.of(
+                    CURRENCY_EXCHANGE_RATER_SELECTOR1,
+                    CURRENCY_EXCHANGE_RATER_SELECTOR2
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubList2() {
+        this.subListAndCheck(
+            new CurrencyExchangeRaterSelectorList(ELEMENTS),
+            2,
+            4,
+            new CurrencyExchangeRaterSelectorList(
+                Lists.of(
+                    CURRENCY_EXCHANGE_RATER_SELECTOR3,
+                    CURRENCY_EXCHANGE_RATER_SELECTOR4
+                )
+            )
+        );
+    }
+
+    @Test
+    public void testSubListSubList() {
+        this.subListAndCheck(
+            new CurrencyExchangeRaterSelectorList(ELEMENTS)
+                .subList(
+                    1,
+                    4
+                ), // 2, 3, 4
+            1,
+            3,
+            new CurrencyExchangeRaterSelectorList(
+                Lists.of(
+                    CURRENCY_EXCHANGE_RATER_SELECTOR3,
+                    CURRENCY_EXCHANGE_RATER_SELECTOR4
+                )
+            )
         );
     }
 
