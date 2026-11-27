@@ -18,11 +18,11 @@
 package walkingkooka.currency.provider;
 
 import org.junit.jupiter.api.Test;
-import walkingkooka.EmptyTextException;
 import walkingkooka.collect.list.CsvStringList;
 import walkingkooka.collect.list.HasCsvStringListTsvStringListTesting2;
 import walkingkooka.collect.list.ImmutableListTesting;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.collect.list.StringLikeList;
 import walkingkooka.collect.list.StringList;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallerTesting;
@@ -47,31 +47,6 @@ public final class CurrencyExchangeRaterSelectorListTest implements ImmutableLis
         );
     }
 
-
-    @Test
-    public void testFromStringLikeListWithNullElementFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> CurrencyExchangeRaterSelectorList.fromStringLikeList(
-                StringList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR.text())
-                    .concat(null)
-                    .concat(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR.text()
-                    )
-            )
-        );
-    }
-
-    @Test
-    public void testFromStringLikeListWithEmptyStringFails() {
-        assertThrows(
-            EmptyTextException.class,
-            () -> CurrencyExchangeRaterSelectorList.fromStringLikeList(
-                StringList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR.text())
-                    .concat("")
-            )
-        );
-    }
-
     @Test
     public void testFromStringLikeListWithEmpty() {
         this.fromStringLikeListAndCheck(
@@ -90,11 +65,35 @@ public final class CurrencyExchangeRaterSelectorListTest implements ImmutableLis
         );
     }
 
-    private void fromStringLikeListAndCheck(final CsvStringList csvStringList,
+    @Test
+    public void testFromStringLikeListWithListIncludesNull() {
+        this.fromStringLikeListAndCheck(
+            StringList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR.text())
+                .concat(null)
+                .concat(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR.text()),
+            CurrencyExchangeRaterSelectorList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR)
+        );
+    }
+
+    @Test
+    public void testFromStringLikeListWithListIncludesEmpty() {
+        this.fromStringLikeListAndCheck(
+            CsvStringList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR.text())
+                .concat("")
+                .concat(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR.text()),
+            CurrencyExchangeRaterSelectorList.EMPTY.concat(CURRENCY_EXCHANGE_RATER_SELECTOR)
+                .concat(null)
+                .concat(DIFFERENT_CURRENCY_EXCHANGE_RATER_SELECTOR)
+        );
+    }
+
+    private void fromStringLikeListAndCheck(final StringLikeList stringLikeList,
                                             final CurrencyExchangeRaterSelectorList expected) {
         this.checkEquals(
             expected,
-            CurrencyExchangeRaterSelectorList.fromStringLikeList(csvStringList)
+            CurrencyExchangeRaterSelectorList.fromStringLikeList(stringLikeList)
         );
     }
 
