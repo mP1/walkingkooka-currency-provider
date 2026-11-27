@@ -74,21 +74,14 @@ public final class CurrencyExchangeRaterSelectorList extends AbstractList<Curren
     }
 
     @Override
-    public CurrencyExchangeRaterSelectorList setElements(final Collection<CurrencyExchangeRaterSelector> collection) {
-        final CurrencyExchangeRaterSelectorList currencyExchangeRaterSelectorList;
-
-        if (collection instanceof CurrencyExchangeRaterSelectorList) {
-            currencyExchangeRaterSelectorList = (CurrencyExchangeRaterSelectorList) collection;
-        } else {
-            final List<CurrencyExchangeRaterSelector> copy = Lists.array();
-            copy.addAll(collection);
-
-            currencyExchangeRaterSelectorList = this.equals(copy) ?
-                this :
-                this.replaceCurrencyExchangeRaterSelectorList(copy);
-        }
-
-        return currencyExchangeRaterSelectorList;
+    public CurrencyExchangeRaterSelectorList setElements(final Collection<CurrencyExchangeRaterSelector> elements) {
+        return (CurrencyExchangeRaterSelectorList)
+            this.setElementsMaybeCreate(
+                elements,
+                (final Collection<CurrencyExchangeRaterSelector> collection) -> collection instanceof CurrencyExchangeRaterSelectorList,
+                this::elementCheck,
+                this::replaceCurrencyExchangeRaterSelectorLists
+            );
     }
 
     @Override
@@ -96,7 +89,7 @@ public final class CurrencyExchangeRaterSelectorList extends AbstractList<Curren
                                                      final int to) {
         return 0 == from && this.size() == to ?
             this :
-            this.replaceCurrencyExchangeRaterSelectorList(
+            this.replaceCurrencyExchangeRaterSelectorLists(
                 this.list.subList(
                     from,
                     to
@@ -104,7 +97,7 @@ public final class CurrencyExchangeRaterSelectorList extends AbstractList<Curren
             );
     }
 
-    private CurrencyExchangeRaterSelectorList replaceCurrencyExchangeRaterSelectorList(final List<CurrencyExchangeRaterSelector> currencyExchangeRaterSelectorList) {
+    private CurrencyExchangeRaterSelectorList replaceCurrencyExchangeRaterSelectorLists(final List<CurrencyExchangeRaterSelector> currencyExchangeRaterSelectorList) {
         return currencyExchangeRaterSelectorList.isEmpty() ?
             EMPTY :
             new CurrencyExchangeRaterSelectorList(currencyExchangeRaterSelectorList);
