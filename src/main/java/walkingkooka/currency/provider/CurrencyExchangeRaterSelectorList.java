@@ -22,6 +22,7 @@ import walkingkooka.collect.list.HasCsvStringListTsvStringList;
 import walkingkooka.collect.list.ImmutableListDefaults;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.collect.list.StringLikeList;
+import walkingkooka.text.CharSequences;
 import walkingkooka.tree.json.JsonNode;
 import walkingkooka.tree.json.marshall.JsonNodeContext;
 import walkingkooka.tree.json.marshall.JsonNodeMarshallContext;
@@ -45,7 +46,11 @@ public final class CurrencyExchangeRaterSelectorList extends AbstractList<Curren
 
         return EMPTY.setElements(
             stringLikeList.stream()
-                .map(CurrencyExchangeRaterSelector::parse)
+                .map(
+                    (final String string) -> CharSequences.isNullOrEmpty(string) ?
+                        null :
+                        CurrencyExchangeRaterSelector.parse(string)
+                )
                 .collect(Collectors.toList())
         );
     }
